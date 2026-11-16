@@ -1,0 +1,14 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\.dvc",
+    "\\.dvc\\tmp",
+    "\\data",
+    "\\data\\processed",
+    "\\notebooks",
+    "\\src",
+    "\\src\\rag"
+  ],
+  "SelectedNode": "\\.dvc\\tmp",
+  "PreviewInSolutionExplorer": false
+}

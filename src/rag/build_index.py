@@ -15,7 +15,7 @@ def chunk_text_by_tokens(text: str, token_size: int = 200, token_overlap: int =3
         return []
     
     enc = tiktoken.get_encoding("cl100k_base")
-    tokens = ecn.encode(text)
+    tokens = enc.encode(text)
     
     chunks = []
     start = 0
@@ -31,10 +31,10 @@ def main():
     if not os.path.exists(DATA_PATH):
         raise FileNotFoundError(f"Файл {DATA_PATH} не найден.")
     df = pd.read_csv(DATA_PATH)
-    print("Инициализация модели эмбендингов (rubert-base-case-sentence)...")
-    embedder = SentenceTransformer("DeepPavlov/rubert-base-case-sentence")
+    print("Инициализация модели эмбендингов (rubert-base-cased-sentence)...")
+    embedder = SentenceTransformer("DeepPavlov/rubert-base-cased-sentence")
     print("Настройка локальной ChromaDB...")
-    chroma_client = chromadb.PersitentClient(path=DB_DIR)
+    chroma_client = chromadb.PersistentClient(path=DB_DIR)
     collection = chroma_client.get_or_create_collection(name=COLLECTION_NAME)
     
     all_chunks = []
@@ -43,7 +43,7 @@ def main():
     print("Обработка текстов и создание чанков...") 
     for idx, row in df.iterrows():
         text = str(row['text'])
-        topic - str(row['topic']) if 'topic' in df.columns else "unknown"
+        topic = str(row['topic']) if 'topic' in df.columns else "unknown"
         
         chunks = chunk_text_by_tokens(text, token_size=200, token_overlap=30)
         
@@ -56,7 +56,7 @@ def main():
     
     print("Запись векторов и текстов в ChromaDB...")
     collection.add(
-        embedding=vectors,
+        embeddings=vectors,
         documents=all_chunks,
         metadatas=all_metadates,
         ids=all_ids
